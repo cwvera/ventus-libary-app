@@ -1,0 +1,51 @@
+<div class="container">
+  <div class="page-header">
+    <h2 class="page-title">Gestión de libros</h2>
+    <button mat-raised-button color="primary" class="primary-cta" (click)="create()">
+      <mat-icon fontSet="material-symbols-outlined">library_add</mat-icon>
+      Nuevo libro
+    </button>
+  </div>
+  <mat-card class="card-tight">
+    <mat-card-content>
+      <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z2">
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
+          <td mat-cell *matCellDef="let item">{{ item.id }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="title">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Título</th>
+          <td mat-cell *matCellDef="let item">{{ item.title }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="authorName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Autor</th>
+          <td mat-cell *matCellDef="let item">{{ item.authorName }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="genreName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Género</th>
+          <td mat-cell *matCellDef="let item">{{ item.genreName }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Acciones</th>
+          <td mat-cell *matCellDef="let item">
+            <button mat-icon-button matTooltip="Editar" color="primary" (click)="edit(item)">
+              <mat-icon fontSet="material-symbols-outlined">edit</mat-icon>
+            </button>
+            <button mat-icon-button matTooltip="Eliminar" color="warn" (click)="remove(item)">
+              <mat-icon fontSet="material-symbols-outlined">delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+      <mat-paginator [pageSize]="10" [pageSizeOptions]="[5,10,25]" showFirstLastButtons />
+    </mat-card-content>
+    <mat-card-actions align="end"></mat-card-actions>
+  </mat-card>
+</div>

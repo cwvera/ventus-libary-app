@@ -1,0 +1,55 @@
+<h2 mat-dialog-title>{{ id ? 'Editar libro' : 'Nuevo libro' }}</h2>
+<mat-dialog-content>
+  <form [formGroup]="form">
+    <mat-form-field appearance="fill" style="width: 100%">
+      <mat-label>Título</mat-label>
+      <input matInput formControlName="title" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" style="width: 100%">
+      <mat-label>Reseña</mat-label>
+      <textarea matInput formControlName="description" rows="3"></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" style="width: 100%">
+      <mat-label>Autor</mat-label>
+      <mat-select formControlName="authorId">
+        <mat-option *ngIf="!(authors$ | async)?.length" disabled>Cargando autores...</mat-option>
+        <ng-container *ngFor="let a of (authors$ | async)">
+          <mat-option [value]="a.id">{{ a.fullName }}</mat-option>
+        </ng-container>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" style="width: 100%">
+      <mat-label>Género</mat-label>
+      <mat-select formControlName="genreId">
+        <mat-option *ngIf="!(genres$ | async)?.length" disabled>Cargando géneros...</mat-option>
+        <ng-container *ngFor="let g of (genres$ | async)">
+          <mat-option [value]="g.id">{{ g.name }}</mat-option>
+        </ng-container>
+      </mat-select>
+    </mat-form-field>
+
+    <div style="display: flex; gap: 16px; align-items: center">
+      <mat-form-field appearance="fill" style="flex: 1 1 0">
+        <mat-label>Año de publicación</mat-label>
+        <input matInput type="number" formControlName="publicationYear" />
+      </mat-form-field>
+      <mat-slide-toggle formControlName="ac">AC</mat-slide-toggle>
+    </div>
+
+    <mat-form-field appearance="fill" style="width: 100%">
+      <mat-label>Número de páginas</mat-label>
+      <input matInput type="number" formControlName="pageCount" />
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button [disabled]="saving" (click)="cancel()">Cancelar</button>
+  <button mat-raised-button color="primary" [disabled]="saving || form.invalid" (click)="save()">
+    <mat-icon fontSet="material-symbols-outlined">save</mat-icon>
+    Guardar
+  </button>
+  <mat-progress-spinner *ngIf="saving" diameter="24" mode="indeterminate"></mat-progress-spinner>
+</mat-dialog-actions>

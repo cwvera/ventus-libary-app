@@ -1,0 +1,42 @@
+<h2 mat-dialog-title>{{ id ? 'Editar autor' : 'Nuevo autor' }}</h2>
+<mat-dialog-content>
+  <form [formGroup]="form">
+    <mat-form-field appearance="fill" style="width: 100%">
+      <mat-label>Nombre completo</mat-label>
+      <input matInput formControlName="fullName" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" style="width: 100%">
+      <mat-label>Descripción</mat-label>
+      <textarea matInput formControlName="description" rows="3"></textarea>
+    </mat-form-field>
+
+    <div style="display: flex; gap: 16px">
+      <mat-form-field appearance="fill" style="flex: 1 1 0">
+        <mat-label>Fecha de nacimiento</mat-label>
+        <input matInput type="date" formControlName="birthDate" />
+      </mat-form-field>
+      <mat-form-field appearance="fill" style="flex: 1 1 0">
+        <mat-label>Ciudad</mat-label>
+        <input matInput formControlName="city" />
+      </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="fill" style="width: 100%">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" />
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button [disabled]="saving" (click)="cancel()">Cancelar</button>
+  <button mat-button color="warn" *ngIf="id" [disabled]="saving" (click)="delete()">
+    <mat-icon fontSet="material-symbols-outlined">delete</mat-icon>
+    Eliminar
+  </button>
+  <button mat-raised-button color="primary" [disabled]="saving || form.invalid" (click)="save()">
+    <mat-icon fontSet="material-symbols-outlined">save</mat-icon>
+    Guardar
+  </button>
+  <mat-progress-spinner *ngIf="saving" diameter="24" mode="indeterminate"></mat-progress-spinner>
+</mat-dialog-actions>
